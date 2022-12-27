@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/main.css">
+
+    <title>Simulador Compra Entradas</title>
+</head>
+<body>
+    <h1>Tercera Pre Entrega - Pruyas Elio</h1>
+
+    <div class="contenedor-pelicula">
+        <label> Seleccione una pelicula:</label>
+        <select id="pelicula">
+            <!--
+            <option value="10"> Pelicula Ejemplo 1</option>
+            -->
+        </select>
+    </div>
+
+    <ul class="detalles">
+        <li>
+            <div class="butaca"></div>
+            <small>Disponible</small>
+        </li>
+        <li>
+            <div class="butaca seleccionado"></div>
+            <small>Seleccionado</small>
+        </li>
+        <li>
+            <div class="butaca ocupado"></div>
+            <small>Ocupado</small>
+        </li>
+    </ul>
+
+    <div class="contenedor-sala">
+        <div class="pantalla"></div>
+        <div class="fila">
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+        </div>
+        <div class="fila">
+            <div class="butaca ocupado"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+        </div>
+        <div class="fila">
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca"></div>
+            <div class="butaca ocupado"></div>
+        </div>
+        <div class="fila">
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+        </div>
+        <div class="fila">
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca ocupado"></div>
+            <div class="butaca ocupado"></div>
+        </div>
+        <div class="fila">
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+
+            <div class="butaca"></div>
+            <div class="butaca ocupado"></div>
+            <div class="butaca ocupado"></div>
+            <div class="butaca"></div>
+            
+            <div class="butaca"></div>
+            <div class="butaca"></div>
+        </div>
+    </div>
+
+    <p class="informacion">
+        Usted ha seleccionado <span id="cantidad">0</span> butacas. El precio total seria $<span id="total">0</span>
+    </p>
+
+    <script src="js/cartelera.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
