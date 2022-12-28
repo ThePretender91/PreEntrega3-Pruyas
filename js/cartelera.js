@@ -27,7 +27,7 @@ const peliculas =
         estrellas: 3.4,
         cantidad: 0,
         fecha: '',
-        precio: 800
+        precio: 700
     },
 
     {
@@ -42,7 +42,7 @@ const peliculas =
         estrellas: 4.0,
         cantidad: 0,
         fecha: '',
-        precio: 800
+        precio: 600
     },
 
     {
@@ -57,7 +57,7 @@ const peliculas =
         estrellas: 5.0,
         cantidad: 0,
         fecha: '',
-        precio: 800
+        precio: 500
     },
 
     {
@@ -72,7 +72,7 @@ const peliculas =
         estrellas: 3.7,
         cantidad: 0,
         fecha: '',
-        precio: 800
+        precio: 300
     },
 
     {
@@ -87,13 +87,19 @@ const peliculas =
         estrellas: 4.5,
         cantidad: 0,
         fecha: '',
-        precio: 800
+        precio: 400
     }
 ]
 
 const cargarCarteleraSelect = (peliculas) => {
     const seleccionador = document.getElementById('pelicula');
-    seleccionador.innerHTML = '';
+
+    /*seleccionador.innerHTML = '';
+    const option = document.createElement('option');
+    option.textContent = ' ';
+    option.value = 0;
+    seleccionador.appendChild(option);
+    */
 
     peliculas.forEach(pelicula => {
         const option = document.createElement('option');
