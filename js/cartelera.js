@@ -106,12 +106,11 @@ const peliculas =
 const cargarCarteleraSelect = (peliculas) => {
     const seleccionador = document.getElementById('pelicula');
 
-    /*seleccionador.innerHTML = '';
+    seleccionador.innerHTML = '';
     const option = document.createElement('option');
-    option.textContent = ' ';
+    option.textContent = 'Seleccione Pelicula...';
     option.value = 0;
     seleccionador.appendChild(option);
-    */
 
     peliculas.forEach(pelicula => {
         const option = document.createElement('option');

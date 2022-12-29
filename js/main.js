@@ -7,11 +7,9 @@ const peliculaSeleccionada = document.getElementById('pelicula');
 const formatoSeleccionado = document.getElementById('formato');
 const fechaSeleccionada = document.getElementById('fecha');
 const horarioSeleccionado = document.getElementById('horario');
-const cantidad = document.getElementById('cantidad');
-const total = document.getElementById('total');
 const botonCheckout = document.getElementById('checkout');
 const contenedorCheckout = document.querySelector('.contenedor-checkout');
-const alertPlaceholder = document.getElementById('alertaSeleccionButacas')
+const alertPlaceholder = document.getElementById('alertaSeleccionButacas');
 
 let precioPelicula = parseInt(peliculaSeleccionada.value);
 let verificacionButacas = 0;
@@ -34,9 +32,6 @@ function actualizarSeleccion() {
     if(verificacionButacas > 0) {
         document.getElementById('alertaSeleccionButacas').innerHTML = '';
     }     
-
-    cantidad.innerText = verificacionButacas;
-    total.innerText = verificacionButacas * precioPelicula;
 }
 
 function verificarStorage() {
@@ -54,6 +49,8 @@ function verificarStorage() {
 
     if (indicePeliculaSeleccionada !== null) {
         peliculaSeleccionada.selectedIndex = indicePeliculaSeleccionada;
+
+        precioPelicula = localStorage.getItem('precioSeleccionPelicula');
     }
 
     const indiceFormatoSeleccionado = localStorage.getItem('indiceSeleccionFormato');
@@ -82,6 +79,8 @@ function verificarStorage() {
 }
 
 const alert = (message) => {
+    alertPlaceholder.innerHTML = '';
+
     const wrapper = document.createElement('div')
     wrapper.innerHTML = [
       `<div class="alert alert-warning alert-dismissible" role="alert">`,
@@ -97,6 +96,10 @@ const alert = (message) => {
 peliculaSeleccionada.addEventListener('change', (e) => {
     precioPelicula = parseInt(e.target.value);
 
+    if (e.target.selectedIndex !== 0) {
+        document.getElementById('alertaSeleccionButacas').innerHTML = '';
+    }
+
     localStorage.setItem('indiceSeleccionPelicula', e.target.selectedIndex);
     localStorage.setItem('precioSeleccionPelicula', e.target.value);
 
@@ -106,6 +109,10 @@ peliculaSeleccionada.addEventListener('change', (e) => {
 formatoSeleccionado.addEventListener('change', (e) => {
     formatoPelicula = e.target.value;
 
+    if (e.target.selectedIndex !== 0) {
+        document.getElementById('alertaSeleccionButacas').innerHTML = '';
+    }
+
     localStorage.setItem('indiceSeleccionFormato', e.target.selectedIndex);
     localStorage.setItem('valorSeleccionFormato', e.target.value);
 });
@@ -113,12 +120,20 @@ formatoSeleccionado.addEventListener('change', (e) => {
 fechaSeleccionada.addEventListener('change', (e) => {
     fechaPelicula = e.target.value;
 
+    if (e.target.selectedIndex !== 0) {
+        document.getElementById('alertaSeleccionButacas').innerHTML = '';
+    }
+
     localStorage.setItem('indiceSeleccionFecha', e.target.selectedIndex);
     localStorage.setItem('valorSeleccionFecha', e.target.value);
 });
 
 horarioSeleccionado.addEventListener('change', (e) => {
     horarioPelicula = e.target.value;
+
+    if (e.target.selectedIndex !== 0) {
+        document.getElementById('alertaSeleccionButacas').innerHTML = '';
+    }
 
     localStorage.setItem('indiceSeleccionHorario', e.target.selectedIndex);
     localStorage.setItem('valorSeleccionHorario', e.target.value);
@@ -133,47 +148,114 @@ contenedorbutaca.addEventListener('click', (e) => {
 
 botonCheckout.addEventListener('click', (e) => {
     if(verificacionButacas > 0) {
-        const pelicula = peliculas.find(pelicula => pelicula.id === peliculaSeleccionada.selectedIndex+1);
+        const pelicula = peliculas.find(pelicula => pelicula.id === peliculaSeleccionada.selectedIndex);
 
         agregarTransaccion(pelicula, formatoPelicula, verificacionButacas, fechaPelicula, horarioPelicula);
 
         mostarDatosCheckout();
 
         contenedorCheckout.classList.toggle('checkout-active');
+    } else if (peliculaSeleccionada.selectedIndex === 0) {
+        alert('Debe seleccionar alguna pelicula');
+    } else if (formatoSeleccionado.selectedIndex === 0) {
+        alert('Debe seleccionar algun formato');
+    } else if (fechaSeleccionada.selectedIndex === 0) {
+        alert('Debe seleccionar algun dia');
+    } else if (horarioSeleccionado.selectedIndex === 0) {
+        alert('Debe seleccionar alguna funcion');
     } else {
-        alert('Debe seleccionar alguna butaca')
-    }    
+        alert('Debe seleccionar alguna butaca');
+    }
 });
 
 const mostarDatosCheckout = () => {
     const contenedor = document.getElementById('contenedor-transaccion');
-    
+
     transaccion.forEach(transaccion => {
     contenedor.innerHTML = `
-    <div class="contenedor-informacion">
-    <div>
-        <p>Pelicula</p>
-        <p id="nombrePelicula">${transaccion.nombre}</p>
-        <p>Formato: <span id="formatoPelicula">${transaccion.formato}</span></p>
-        <p>Fecha: <span id="fechaHoraPelicula">${transaccion.fecha}</span></p>
-        <p>Cantidad Entradas: <span id="cantidadEntradas">${transaccion.cantidad}</span></p>
-        <p>Precio por Entrada: $<span id="precioEntrada">${transaccion.precio}</span></p>
-    </div>
-    <img src=${transaccion.imagen} width="200" alt="${transaccion.nombre}">
-    </div>
-    <p><small>Si esta correcto la transaccion, presione "Aceptar".</small></p>
-    <p><small>Si desea realizar alguna modificacion, presione en "Cancelar"</small></p>
-    <div class="contenedor-botones-checkout">
-        <div class="d-grid gap-2 d-md-block">
-            <button class="btn btn-primary" type="button" id="aceptarCheckout">Aceptar</button>
-            <button class="btn btn-secondary" type="button" id="cancelarCheckout">Cancelar</button>
+        <div class="contenedor-informacion">
+            <div>
+                <p>Pelicula</p>
+                <p id="nombrePelicula">${transaccion.nombre}</p>
+                <p>Formato: <span id="formatoPelicula">${transaccion.formato}</span></p>
+                <p>Fecha: <span id="fechaHoraPelicula">${transaccion.fecha}</span></p>
+                <p>Cantidad Entradas: <span id="cantidadEntradas">${transaccion.cantidad}</span></p>
+                <p>Precio por Entrada: $<span id="precioEntrada">${transaccion.precio}</span></p>
+            </div>
+            <img src=${transaccion.imagen} width="200" alt="${transaccion.nombre}">
         </div>
-    </div>`
-});
+        <p><small>Ingrese codigo de descuento: </small><input id="codigoDescuento" type="text"></p>
+        <p><small>Si desea continuar, presione "Aceptar".</small></p>
+        <p><small>Si desea realizar alguna modificacion, presione en "Cancelar"</small></p>
+        <div class="contenedor-botones-checkout">
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary" type="button" id="aceptarCheckout">Aceptar</button>
+                <button class="btn btn-secondary" type="button" id="cancelarCheckout">Cancelar</button>
+            </div>
+        </div>`
+    }); 
+    document.getElementById('cancelarCheckout').addEventListener('click', (e) => {
+        contenedorCheckout.classList.toggle('checkout-active');
+    });
+
+    document.getElementById('aceptarCheckout').addEventListener('click', (e) => {
+        const codigoDescuento = document.getElementById('codigoDescuento');
+        const precioParcial = transaccion.reduce((acc, elemento) => acc + (elemento.precio * elemento.cantidad), 0);
+        
+        const precioTotal = verificarDescuento(precioParcial, codigoDescuento.value);
+        mostrarTransaccionFinalizada(precioTotal);
+    });
+};
+
+const mostrarTransaccionFinalizada = (precio) => {
+    const contenedor = document.getElementById('contenedor-transaccion');
+
+    transaccion.forEach(transaccion => {
+    contenedor.innerHTML = `
+        <div class="contenedor-informacion">
+            <div>
+                <p>Pelicula</p>
+                <p id="nombrePelicula">${transaccion.nombre}</p>
+                <p>Formato: <span id="formatoPelicula">${transaccion.formato}</span></p>
+                <p>Fecha: <span id="fechaHoraPelicula">${transaccion.fecha}</span></p>
+                <p>Cantidad Entradas: <span id="cantidadEntradas">${transaccion.cantidad}</span></p>
+                <p>Precio por Entrada: $<span id="precioEntrada">${transaccion.precio}</span></p>
+            </div>
+            <img src=${transaccion.imagen} width="200" alt="${transaccion.nombre}">
+        </div>
+        <p><small>El total de la transaccion es: </small><span>$${precio}</span></p>
+        <p><small>Gracias por su compra.</small></p>
+        <div class="contenedor-botones-checkout">
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary" type="button" id="finalizarCompra">Finalizar</button>
+            </div>
+        </div>`
+    });
+    
+    document.getElementById('finalizarCompra').addEventListener('click', (e) => {
+        contenedorCheckout.classList.toggle('checkout-active');
+        transaccion.length = 0;
+    });
 }
 
+const verificarDescuento = (precio, codigoDescuento) => {
+    let precioDescuento = 0;
+
+    const fechaFlag = transaccion.some ((pelicula) => pelicula.fecha.includes('LUNES') || pelicula.fecha.includes('MIERCOLES') || pelicula.fecha.includes('VIERNES'));
+
+    fechaFlag && (precioDescuento = precio * 0.85);
+
+    if ((codigoDescuento.trim().toUpperCase()) === 'CODER'){
+        precioDescuento === 0 ? precioDescuento = precio * 0.50 : precioDescuento = precioDescuento * 0.50;
+    } else if (precioDescuento === 0) {
+        return(precio);
+    }
+
+    return(precioDescuento);
+};
+
 const agregarTransaccion = (pelicula, formato, cantidad, fecha, horario) => {
-    pelicula.cantidad += cantidad;
+    pelicula.cantidad = cantidad;
     pelicula.fecha = fecha + '. ' + horario;
     pelicula.formato = formato;
     

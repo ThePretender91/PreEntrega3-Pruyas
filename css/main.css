@@ -22,6 +22,10 @@ body {
     display: flex;
 }
 
+select {
+    margin: 10px 0;
+}
+
 .contenedor-info-pelicula{
     margin: 20px 0px;
     display: flex;
@@ -101,12 +105,10 @@ body {
     margin-bottom: 30px;
 }
 
-p.informacion {
-    margin: 5px 0;
-}
-  
 span {
-    color: #6feaf6;
+    color: #000000;
+    font-size: larger;
+    font-weight: bolder;
 }
 
 .contenedor-boton-checkout {
@@ -203,5 +205,5 @@ span {
 }
 
 #contenedor-transaccion p {
-    margin: 0 0 0;
+    margin: 5px 0 0;
 }
