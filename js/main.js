@@ -234,7 +234,13 @@ const mostrarTransaccionFinalizada = (precio) => {
     
     document.getElementById('finalizarCompra').addEventListener('click', (e) => {
         contenedorCheckout.classList.toggle('checkout-active');
+
+        //Los datos de la transaccion se eliminan al terminar la misma
         transaccion.length = 0;
+        //Tambien es posible de ser necesario que eliminen los datos de localstorage al terminar la operacion
+        //localStorage.clear();
+        //Recarga la pagina al terminar para iniciar el proceso desde cero nuevamente
+        //window.location.reload();
     });
 }
 

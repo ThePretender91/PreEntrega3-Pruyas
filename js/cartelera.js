@@ -103,6 +103,7 @@ const peliculas =
     }
 ]
 
+//Carga opciones de peliculas
 const cargarCarteleraSelect = (peliculas) => {
     const seleccionador = document.getElementById('pelicula');
 
